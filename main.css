@@ -249,12 +249,12 @@ div#footer {
 	font-size: small;
 	color: #c0c0c0;
 	min-width: 200px;
-	max-width: 850px;
+	max-width: 1350px;
 	margin: auto;
 	padding-top: 25px;
 	padding-bottom: 25px;
-	padding-left: 35px;
-	padding-right: 35px;
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 div#footer a {
