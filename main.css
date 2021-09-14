@@ -106,10 +106,10 @@ div#layout-content{
 	min-height: calc(100vh - 240px);
 	padding-top: 25px;
 	padding-bottom: 25px;
-	padding-left: 35px;
-	padding-right: 35px;
+	padding-left: 15px;
+	padding-right: 15px;
 	min-width: 200px;
-	max-width: 850px;
+	max-width: 1350px;
 	margin: auto;
 }
 
@@ -659,8 +659,6 @@ div#layout-menu-container .closebtn:hover {
 }
 
 
-
-
 /* members */
 div#member-container{
 	text-align: center;
@@ -681,6 +679,31 @@ div#member img{
 }
 
 div#member p{
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+}
+
+/* members 2 */
+div#member2-container{
+	text-align: left;
+}
+div#member2{
+	display: inline-block;
+	vertical-align: top;
+	width: 150px;
+	text-align: left;
+	margin-bottom: 0px;
+	margin-right: 0px;
+}
+
+div#member2 img{
+/*	width: 150px; */
+	margin: 0px;
+	padding: 0px;
+}
+
+div#member2 p{
 	text-align: center;
 	margin: 0px;
 	padding: 0px;
