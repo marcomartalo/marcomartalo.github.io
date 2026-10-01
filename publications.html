@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications | Marco Martalò</title>
+    <meta name="description" content="Full list of publications by Marco Martalò: books, book chapters, journal papers, conference papers, patents.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-logo">
+            <img src="img/profile.jpg" alt="Marco Martalò">
+            <div class="header-text">
+                <span class="header-name">Marco Martalò</span>
+                <span class="header-page">Publications</span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="research.html">Research</a></li>
+            <li><a href="publications.html" class="nav-active">Publications</a></li>
+            <li><a href="teaching.html">Teaching</a></li>
+            <li><a href="activities.html">Activities</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="pub-layout">
+            <aside class="pub-sidebar">
+                <div class="scholar-block">
+                    <span class="sidebar-label">Bibliometrics</span>
+                    <div class="metric-card"><span class="metric-label">Scholar citations</span><span class="metric-value">1373</span></div>
+                    <div class="metric-card"><span class="metric-label">Scholar h-index</span><span class="metric-value">18</span></div>
+                    <div class="metric-card"><span class="metric-label">Scopus citations</span><span class="metric-value">840</span></div>
+                    <div class="metric-card"><span class="metric-label">Scopus h-index</span><span class="metric-value">16</span></div>
+                    <a class="scholar-link" href="https://scholar.google.it/citations?user=1RxxZf4AAAAJ" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;border-bottom:1px solid var(--border-gold);padding-bottom:1px;">Google Scholar &#8594;</a>
+                </div>
+
+                <div class="filter-block">
+                    <span class="sidebar-label">Filter by Type</span>
+                    <button class="filter-btn active" data-filter="all">All <span class="filter-count" id="count-all"></span></button>
+                    <button class="filter-btn" data-filter="journal">Journal Papers <span class="filter-count" id="count-journal"></span></button>
+                    <button class="filter-btn" data-filter="conference">Int'l Conference Papers <span class="filter-count" id="count-conference"></span></button>
+                    <button class="filter-btn" data-filter="natconf">National Conf. Papers <span class="filter-count" id="count-natconf"></span></button>
+                    <button class="filter-btn" data-filter="bookchapter">Book Chapters <span class="filter-count" id="count-bookchapter"></span></button>
+                    <button class="filter-btn" data-filter="book">Books <span class="filter-count" id="count-book"></span></button>
+                    <button class="filter-btn" data-filter="patent">Patents <span class="filter-count" id="count-patent"></span></button>
+                    <button class="filter-btn" data-filter="misc">Miscellaneous <span class="filter-count" id="count-misc"></span></button>
+                </div>
+
+                <p style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);line-height:1.7;">
+                    Copyright and all rights to the listed works are retained by the respective publishers (IEEE, IET, Elsevier, MDPI, Springer, Wiley, and others). Listed for scholarly reference only.
+                </p>
+            </aside>
+
+            <div class="pub-main">
+                <div class="page-header-inner" style="margin-bottom:24px;">
+                    <h1>Publications</h1>
+                    <p>Books, book chapters, journal &amp; conference papers, patents and more</p>
+                </div>
+                <div class="pub-counter" id="pub-counter">Showing 132 publications</div>
+                <div id="pub-list"></div>
+                <div class="no-results" id="no-results">No publications match this filter.</div>
+            </div>
+        </div>
+    </main>
+
+    <footer><p>&copy; 2026 Marco Martalò. University of Cagliari · DIEE · Net4U Lab.</p></footer>
+
+    <div id="back-to-top" title="Back to top">
+        <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </div>
+
+    <script src="pubs-data.js"></script>
+    <script>
+        const TYPE_LABELS = {
+            journal: 'Journal', conference: 'Int\'l Conference', natconf: 'National Conf.',
+            bookchapter: 'Book Chapter', book: 'Book', patent: 'Patent', misc: 'Misc.'
+        };
+
+        function highlightAuthor(str) {
+            return str.replace(/M\.\s*Martal[oò]/g, '<strong>M. Martalò</strong>');
+        }
+
+        function renderList(filter) {
+            const list = document.getElementById('pub-list');
+            const sorted = [...PUBLICATIONS].sort((a, b) => {
+                if (b.year !== a.year) return b.year - a.year;
+                return b.id.localeCompare(a.id, undefined, {numeric:true});
+            });
+            list.innerHTML = '';
+            let shown = 0;
+            sorted.forEach(function (e) {
+                const match = (filter === 'all' || e.type === filter);
+                const div = document.createElement('div');
+                div.className = 'pub-entry' + (match ? '' : ' hidden');
+                div.innerHTML =
+                    '<span class="pub-type-tag">' + TYPE_LABELS[e.type] + '</span>' +
+                    '<span class="pub-year">' + e.year + ' &middot; [' + e.id + ']</span>' +
+                    '<h3>' + e.title + '</h3>' +
+                    '<div class="pub-authors">' + highlightAuthor(e.authors) + '</div>' +
+                    '<div class="pub-venue">' + e.venue + '</div>';
+                list.appendChild(div);
+                if (match) shown++;
+            });
+            document.getElementById('pub-counter').textContent = 'Showing ' + shown + ' publication' + (shown === 1 ? '' : 's');
+            document.getElementById('no-results').style.display = shown === 0 ? 'block' : 'none';
+        }
+
+        function updateCounts() {
+            const counts = { all: PUBLICATIONS.length };
+            PUBLICATIONS.forEach(function (e) { counts[e.type] = (counts[e.type] || 0) + 1; });
+            Object.keys(counts).forEach(function (k) {
+                const el = document.getElementById('count-' + k);
+                if (el) el.textContent = counts[k];
+            });
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                renderList(btn.dataset.filter);
+            });
+        });
+
+        updateCounts();
+        renderList('all');
+
+        window.addEventListener('scroll', function () {
+            var btn = document.getElementById('back-to-top');
+            if (window.scrollY > 400) btn.classList.add('visible'); else btn.classList.remove('visible');
+        });
+        document.getElementById('back-to-top').addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
